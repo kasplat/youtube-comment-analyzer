@@ -1,4 +1,5 @@
 import json
+import os
 
 from statistics import mean
 from textblob import TextBlob
@@ -13,10 +14,11 @@ def index():
         if 'url' not in request.form:
             return "No url provided, please try again"
         url = request.form['url']
-        # comments = get_video_comment(url)
-        comments = ['I hate dogs', 'I love dogs']
+        comments = get_video_comment(url, os.environ['youtube_key'], 50)
         s_dict = get_sentiment_dict(comments)
         average_sentiment = mean(s_dict.values())
-        return render_template("Average Sentiment is " + str(average_sentiment))
+        print(s_dict)
+        print('num comments: ' + str(len(comments)))
+        return "Average Sentiment is " + str(average_sentiment)
     else:
         return render_template('index.html')

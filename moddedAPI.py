@@ -38,11 +38,9 @@ def openURL(url, parms):
         return matches
 
 
-def get_video_comment(url,key):
-    parser = argparse.ArgumentParser()
+def get_video_comment(url, key, max_comments):
     mxRes = 20
     vid = str()
-
     try:
         video_id = urlparse(str(url))
         q = parse_qs(video_id.query)
@@ -62,43 +60,18 @@ def get_video_comment(url,key):
 
 
     matches = openURL(YOUTUBE_COMMENT_URL, parms)
-    i = 2
     mat = json.loads(matches)
 
     nextPageToken = mat.get("nextPageToken")
     commentArr = load_comments(mat)
+    num_comments = len(commentArr)
 
-    while nextPageToken:
+    while nextPageToken and num_comments < max_comments:
         parms.update({'pageToken': nextPageToken})
         matches = openURL(YOUTUBE_COMMENT_URL, parms)
         mat = json.loads(matches)
         nextPageToken = mat.get("nextPageToken")
         commentArr = commentArr + load_comments(mat)
-
+        num_comments = len(commentArr)
 
     return commentArr
-
-    """
-    nextPageToken = mat.get("nextPageToken")
-    print("\nPage : 1")
-    print("------------------------------------------------------------------")
-    load_comments(mat)
-
-    while nextPageToken:
-        parms.update({'pageToken': nextPageToken})
-        matches = openURL(YOUTUBE_COMMENT_URL, parms)
-        mat = json.loads(matches)
-        nextPageToken = mat.get("nextPageToken")
-        print("\nPage : ", i)
-        print("------------------------------------------------------------------")
-
-        load_comments(mat)
-
-        i += 1
-
-    except KeyboardInterrupt:
-        print("User Aborted the Operation")
-
-    except:
-        print("Cannot Open URL or Fetch comments at a moment")
-    """
