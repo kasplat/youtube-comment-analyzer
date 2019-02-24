@@ -10,7 +10,8 @@ Have you ever wondered how Youtube REALLY feels about a video? Are you a content
 
 ## Acknowledgments
 
-Thanks to HackCU for hosting us!
+* Thanks to HackCU for hosting us!
+* Thanks to srcede for this wonderful tool for using Youtube's (broken) API: https://github.com/srcecde/python-youtube-api
 
 ### Contributors
 

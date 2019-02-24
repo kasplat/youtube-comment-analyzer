@@ -1,6 +1,9 @@
 from textblob import TextBlob
 
 def get_sentiment_dict(comments):
+    """
+    creates the sentiment dict. Key is the comment, value is the sentiment polarity.
+    """
     s_dict = {}
     for comment in comments:
         blob = TextBlob(comment)
