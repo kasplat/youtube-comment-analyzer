@@ -19,6 +19,8 @@ def index():
         average_sentiment = mean(s_dict.values())
         print(s_dict)
         print('num comments: ' + str(len(comments)))
-        return render_template("Average Sentiment is " + str(average_sentiment))
+        sentiment_data = "Average Sentiment is " + str(average_sentiment)
+        data = {"sentiment_data": sentiment_data}
+        return render_template("index.html", data=data)
     else:
         return render_template('index.html')
