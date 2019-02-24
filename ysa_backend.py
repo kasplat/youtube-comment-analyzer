@@ -20,8 +20,11 @@ def index():
         if 'url' not in request.form:
             return "No url provided, please try again"
         url = request.form['url']
-        comments = get_video_comments(url, os.environ['youtube_key'], 50)
-        s_dict, most_positive, most_negative = get_sentiment_dict(comments)
+        max_number_comments = int(request.form['max_number_comments']) if 'max_number_comments' in request.form else 50
+        if max_number_comments < 20 or max_number_comments > 500:
+            max_number_comments = 200
+        comments, url = get_video_comments(url, os.environ['youtube_key'], max_number_comments)
+        s_dict, most_positive, most_negative, toxicity = get_sentiment_dict(comments)
         average_sentiment = mean(s_dict.values())
         # print(s_dict)
         # print('num comments: ' + str(len(comments)))
@@ -30,7 +33,7 @@ def index():
         # print(words)
         print(most_negative)
         print(most_positive)
-        return render_template("index.html", sentiment_data=sentiment_data, words=json.dumps(words), most_positive=most_positive, most_negative=most_negative)
+        return render_template("index.html", sentiment_data=sentiment_data, words=json.dumps(words), most_positive=most_positive, most_negative=most_negative, toxicity=toxicity, yt_url=url)
     else:
         return render_template('index.html')
 

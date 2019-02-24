@@ -1,6 +1,31 @@
-/* body{
+body{
   background-image: url(background.webp);
-} */
-form{
-  text-align: center;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-container{
+  flex: 0 0 72px;
+}
+
+.first-row{
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.second-row{
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.my-card{
+  flex: 1 1 auto;
+  padding: 10px;
+}
+
+.cloud{
+  flex: 2 1 auto;
 }

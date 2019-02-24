@@ -19,6 +19,10 @@ Have you ever wondered how Youtube REALLY feels about a video? Are you a content
 * Display most active commentators
 * Which comments are fake
 
+## Example toxicities
+* hbomberguy: 23%
+* nigahiga: 6%
+* 
 
 ## Acknowledgments
 

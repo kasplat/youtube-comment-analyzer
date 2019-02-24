@@ -10,44 +10,78 @@
         <script src="{{ url_for('static', filename='js/d3.js') }}"></script>
         <script src="{{ url_for('static', filename='js/d3.layout.cloud.js') }}"></script>
         <script src="{{ url_for('static', filename='js/d3.wordcloud.js') }}"></script>
-        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
+        <link rel="stylesheet" href="/static/stylesheets/style.css">
     </head>
 
     <body>
-      <div>
-        <h1 class = "text-center">Welcome to the Youtube Comment Section Analyzer!</h1>
-        <form action="/" method="post">
-            Youtube URL: <input type="text" name="url">
-            <input type="submit" value="Submit">
-        </form>
-        <p class = "text-center">Average Sentiment is {{ sentiment_data }}</p>
+    <div class="container">
+        <div class="banner-container">
+            <h1 class = "text-center">Welcome to the Youtube Comment Section Analyzer!</h1>
+        </div>
+  
+          <div class="first-row">
+            <div class="my-card">
+              <form action="/" method="post">
+                <div class="form-group">
+                    Youtube URL: <input class="form-control" type="text" name="url">
+                </div>
+                <div class="form-group">
+                    Number of Comments: <input class="form-control" type="text" name="max_number_comments" aria-describedby="commentHelp">
+                    <small id="commentHelp" class="form-text text-muted">Must be between 20-500, default is 200.</small>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Submit">
+              </form>
+              {% if sentiment_data %}
+              <iframe width="300" height="200" src="https://www.youtube.com/embed/{{ yt_url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+              {% endif %}
+            </div>
+            {% if sentiment_data %}
+            
+            <div class="my-card cloud">
+                <div id='wordcloud'></div>
+                <script type="text/javascript">
+                var words = {{ words|safe }}
+                console.log(words);
+                d3.wordcloud()
+                    .size([800, 400])
+                    .selector('#wordcloud')
+                    .words(words)
+                    .start();
+                </script>
+            </div>
+            {% endif %}
+          </div>
+          
+          {% if sentiment_data %}
+          <div class="second-row">
+            
+              <div class="my-card">
+                  <p class = "text-center">Toxicity of the comment section is: {{ toxicity }}%</p>
+                  <br>
+                  <p>For reference: Despacito has a toxicity of 4%, Aladdin has a toxicity of 15%, and Last Week Tonight's episode on Facebook has a toxicity of 32% </p>
+                  <p class = "text-center">Average Sentiment is: {{ sentiment_data }}. This ranges from -1 to 1. Most videos are close to 0.</p>
+              </div>
 
-        <p>
-          <b>Most positive comments:</b> 
-          {% for comment in most_positive %}
-            <li>{{ comment }}</li>
-          {% endfor %}
-        </p>
 
-        <p>
-          <b>Most negative comments:</b> 
-          {% for comment in most_negative %}
-            <li>{{ comment }}</li>
-          {% endfor %}
-        </p>
-        
-
-        <div id='wordcloud'></div>
-        <script type="text/javascript">
-        var words = {{ words|safe }}
-        console.log(words);
-        d3.wordcloud()
-            .size([800, 400])
-            .selector('#wordcloud')
-            .words(words)
-            .start();
-        </script>
-
+              <div class="my-card">
+                  <p>
+                      <b>Most positive comments:</b> 
+                      {% for comment in most_positive %}
+                        <li>{{ comment }}</li>
+                      {% endfor %}
+                    </p>
+              </div>
+  
+              <div class="my-card">
+                  <p>
+                      <b>Most negative comments:</b> 
+                      {% for comment in most_negative %}
+                        <li>{{ comment }}</li>
+                      {% endfor %}
+                    </p>
+              </div>
+          </div>
+          {% endif %}
       </div>
     </body>
 </html>

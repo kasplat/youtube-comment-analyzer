@@ -74,4 +74,4 @@ def get_video_comments(url, key, max_comments):
         commentArr = commentArr + load_comments(mat)
         num_comments = len(commentArr)
 
-    return commentArr
+    return commentArr, vid

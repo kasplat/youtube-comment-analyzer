@@ -9,9 +9,15 @@ def get_sentiment_dict(comments):
         blob = TextBlob(comment)
         s_dict[comment] = blob.sentiment.polarity
     s = [(k, s_dict[k]) for k in sorted(s_dict, key=s_dict.get, reverse=True)]
-    most_positive = [x[0] for x in s[:9]]
-    most_negative = [x[0] for x in s[-10:]]
-    return s_dict, most_positive, most_negative
+    most_positive = [x[0] for x in s[:5]]
+    most_negative = [x[0] for x in s[-5:]]
+    total = len(s)
+    num_neg = 0
+    for word in s:
+        if word[1] < 0:
+            num_neg += 1
+    toxicity = int(100 * num_neg / total)
+    return s_dict, most_positive, most_negative, toxicity
 
 
 def demo():
