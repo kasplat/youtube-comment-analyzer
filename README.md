@@ -8,6 +8,15 @@ Have you ever wondered how Youtube REALLY feels about a video? Are you a content
 
 ## Use
 
+##Upcoming Features
+* Sort Comments by sentiment
+* Return common keywords from your comment sections
+* Return main ideas of comments (and comment threads)
+* can query the comments using keywords
+* compare the comment statistics of two different videos
+* use the time stamp of comments to visualize the community engagement in the video over time
+ 
+
 ## Acknowledgments
 
 * Thanks to HackCU for hosting us!
