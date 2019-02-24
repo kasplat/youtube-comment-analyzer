@@ -38,7 +38,7 @@ def openURL(url, parms):
         return matches
 
 
-def get_video_comment(url, key, max_comments):
+def get_video_comments(url, key, max_comments):
     mxRes = 20
     vid = str()
     try:

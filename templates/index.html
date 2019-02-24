@@ -7,17 +7,47 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/d3.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/d3.layout.cloud.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/d3.wordcloud.js') }}"></script>
         <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
     </head>
 
     <body>
       <div>
-        <h1 class = "text-center">Welcome to the Youtube Comment Sentiment Analyzer!</h1>
+        <h1 class = "text-center">Welcome to the Youtube Comment Section Analyzer!</h1>
         <form action="/" method="post">
             Youtube URL: <input type="text" name="url">
             <input type="submit" value="Submit">
         </form>
-        <p class = "text-center">{{ sentiment_data }}</p>
+        <p class = "text-center">Average Sentiment is {{ sentiment_data }}</p>
+
+        <p>
+          <b>Most positive comments:</b> 
+          {% for comment in most_positive %}
+            <li>{{ comment }}</li>
+          {% endfor %}
+        </p>
+
+        <p>
+          <b>Most negative comments:</b> 
+          {% for comment in most_negative %}
+            <li>{{ comment }}</li>
+          {% endfor %}
+        </p>
+        
+
+        <div id='wordcloud'></div>
+        <script type="text/javascript">
+        var words = {{ words|safe }}
+        console.log(words);
+        d3.wordcloud()
+            .size([800, 400])
+            .selector('#wordcloud')
+            .words(words)
+            .start();
+        </script>
+
       </div>
     </body>
 </html>

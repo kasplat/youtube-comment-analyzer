@@ -8,7 +8,11 @@ def get_sentiment_dict(comments):
     for comment in comments:
         blob = TextBlob(comment)
         s_dict[comment] = blob.sentiment.polarity
-    return s_dict
+    s = [(k, s_dict[k]) for k in sorted(s_dict, key=s_dict.get, reverse=True)]
+    most_positive = [x[0] for x in s[:9]]
+    most_negative = [x[0] for x in s[-10:]]
+    return s_dict, most_positive, most_negative
+
 
 def demo():
     text = '''
