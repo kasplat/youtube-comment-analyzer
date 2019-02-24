@@ -6,7 +6,14 @@ Have you ever wondered how Youtube REALLY feels about a video? Are you a content
 
 ### Requirements
 
+* Python 3
+* Flask
+* Textblob
+
 ## Use
+
+* Add a private key as an environment variable (`export youtube_key=YOUR_GOOGLE_API_KEY_HERE`).
+* Go into the directory and run `FLASK_APP=ysa_backend.py flask run`. This will start a localhost at http://127.0.0.1:5000/ where you can visit the website.
 
 ## Upcoming Features
 * Return main ideas of comments (and comment threads)
