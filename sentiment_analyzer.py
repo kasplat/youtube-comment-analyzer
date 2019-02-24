@@ -13,11 +13,19 @@ def get_sentiment_dict(comments):
     most_negative = [x[0] for x in s[-5:]]
     total = len(s)
     num_neg = 0
+    num_pos = 0
+    num_neutral = 0
     for word in s:
         if word[1] < 0:
             num_neg += 1
+        elif word[1] == 0:
+            num_neutral += 1
+        else:
+            num_pos += 1
     toxicity = int(100 * num_neg / total)
-    return s_dict, most_positive, most_negative, toxicity
+    p_pos = int(100*num_pos/total)
+    p_neutral = int(100*num_neutral/total)
+    return s_dict, most_positive, most_negative, toxicity, p_pos, p_neutral
 
 
 def demo():

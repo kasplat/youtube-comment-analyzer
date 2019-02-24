@@ -10,6 +10,7 @@
         <script src="{{ url_for('static', filename='js/d3.js') }}"></script>
         <script src="{{ url_for('static', filename='js/d3.layout.cloud.js') }}"></script>
         <script src="{{ url_for('static', filename='js/d3.wordcloud.js') }}"></script>
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <link rel="stylesheet" href="/static/stylesheets/style.css">
     </head>
 
@@ -18,7 +19,7 @@
         <div class="banner-container">
             <h1 class = "text-center">Welcome to the Youtube Comment Section Analyzer!</h1>
         </div>
-  
+
           <div class="first-row">
             <div class="my-card">
               <form action="/" method="post">
@@ -36,7 +37,7 @@
               {% endif %}
             </div>
             {% if sentiment_data %}
-            
+
             <div class="my-card cloud">
                 <div id='wordcloud'></div>
                 <script type="text/javascript">
@@ -51,30 +52,55 @@
             </div>
             {% endif %}
           </div>
-          
+
           {% if sentiment_data %}
           <div class="second-row">
-            
+
               <div class="my-card">
                   <p class = "text-center">Toxicity of the comment section is: {{ toxicity }}%</p>
                   <br>
                   <p>For reference: Despacito has a toxicity of 4%, Aladdin has a toxicity of 15%, and Last Week Tonight's episode on Facebook has a toxicity of 32% </p>
                   <p class = "text-center">Average Sentiment is: {{ sentiment_data }}. This ranges from -1 to 1. Most videos are close to 0.</p>
+                  <script>
+                  window.onload = function() {
+
+                  var chart = new CanvasJS.Chart("chartContainer", {
+                  	animationEnabled: true,
+                  	title: {
+                  		text: "Comment Break Down"
+                  	},
+                  	data: [{
+                  		type: "pie",
+                  		startAngle: 240,
+                  		yValueFormatString: "##0.00\"%\"",
+                  		indexLabel: "{label} {y}",
+                  		dataPoints: [
+                  			{y: {{num_neutral}}, label: "Neutral"},
+                  			{y: {{ num_pos}}, label: "Positive"},
+                  			{y: {{ num_neg }}, label: "Negative"},
+                  		]
+                  	}]
+                  });
+                  chart.render();
+
+                  }
+                  </script>
+              <div id="chartContainer" style="height: 370px; width: 100%;"></div>
               </div>
 
 
               <div class="my-card">
                   <p>
-                      <b>Most positive comments:</b> 
+                      <b>Most positive comments:</b>
                       {% for comment in most_positive %}
                         <li>{{ comment }}</li>
                       {% endfor %}
                     </p>
               </div>
-  
+
               <div class="my-card">
                   <p>
-                      <b>Most negative comments:</b> 
+                      <b>Most negative comments:</b>
                       {% for comment in most_negative %}
                         <li>{{ comment }}</li>
                       {% endfor %}
