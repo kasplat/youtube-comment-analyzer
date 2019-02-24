@@ -10,14 +10,17 @@
         <script src="lib/d3/d3.js"></script>
         <script src="lib/d3/d3.layout.cloud.js"></script>
         <script src="d3.wordcloud.js"></script>
+        <link rel="stylesheet" href="my_style.css">
     </head>
-    
+
     <body>
-        <h1>Welcome to the Youtube Comment Sentiment Analyzer!</h1>
+      <div>
+        <h1 class = "text-center">Welcome to the Youtube Comment Sentiment Analyzer!</h1>
         <form action="/" method="post">
-            Youtube URL: <input type="text" name="url"><br>
+            Youtube URL: <input type="text" name="url">
             <input type="submit" value="Submit">
         </form>
-        <p>{{ sentiment_data }}</p>
+        <p class = "text-center">{{ sentiment_data }}</p>
+     </div>
     </body>
 </html>
